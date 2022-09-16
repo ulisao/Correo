@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.core.mail import EmailMessage, send_mail
 from django.core.checks import messages
 from django.shortcuts import render
@@ -34,3 +35,21 @@ def Newsletter_SignUp(request): #Enviamos correo electronico
     return render(request, 'start.html', context)
 
 
+def Newsletter_Unsubscribe(request):
+    form = NewsletterUserSignUpForm(request.POST or None)
+
+    if form.is_valid():
+        instance = form.save(commit=False)
+        if NewsletterUser.objects.filter(email=instance.email).exists():
+            NewsletterUser.objects.filter(email=instance.email).delete()
+            messages.success(request, 'Has anulado tu suscripcion, muchas gracias')
+
+        else:
+            print('Email no encontrado')
+            messages.Warning(request, 'El correo no ha sido encontrado')
+
+    context = {
+        'form':form
+    }
+    
+    return render(request, 'unsubscribe.html', context)
