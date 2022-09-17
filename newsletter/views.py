@@ -1,6 +1,5 @@
-from multiprocessing import context
 from django.core.mail import EmailMessage, send_mail
-from django.core.checks import messages
+from django.contrib import messages
 from django.shortcuts import render
 from .forms import NewsletterUserSignUpForm
 from .models import NewsletterUser
@@ -42,7 +41,7 @@ def Newsletter_Unsubscribe(request):
         instance = form.save(commit=False)
         if NewsletterUser.objects.filter(email=instance.email).exists():
             NewsletterUser.objects.filter(email=instance.email).delete()
-            messages.success(request, 'Has anulado tu suscripcion, muchas gracias')
+            messages.Success(request, 'Has anulado tu suscripcion, muchas gracias')
 
         else:
             print('Email no encontrado')
