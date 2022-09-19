@@ -56,12 +56,12 @@ TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
-
-EMAIL_HOST = 'smpt.googlemail.com'
-EMAIL_PORT= 587
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = True
+if not DEBUG:
+    EMAIL_HOST = os.environ.get('EMAIL_HOST')
+    EMAIL_PORT= os.environ.get('EMAIL_PORT')
+    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+    EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
